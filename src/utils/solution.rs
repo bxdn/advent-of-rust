@@ -25,7 +25,7 @@ impl SolutionErr {
 
 impl Solution {
     pub fn calculate(&self) -> Result<String, SolutionErr> {
-        let path = format!("private/input/{}/day{}.txt", self.year, self.day);
+        let path = format!("private/inputs/{}/day{}.txt", self.year, self.day);
         let contents = read_to_string(path)?;
         (self.calculator)(&contents)
     }
