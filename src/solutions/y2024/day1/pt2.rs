@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::utils::solution::{Solution, SolutionErr};
+use crate::{solutions::y2024::day1::shared::parse_line, utils::solution::{Solution, SolutionErr}};
 
 
 pub fn sol() -> Solution {
@@ -15,7 +15,7 @@ pub fn sol() -> Solution {
 fn calculate(input: &str) -> Result<String, SolutionErr> {
     let (l, mut r) = input
         .lines()
-        .try_fold((HashMap::new(), HashMap::new()), process_line)?;
+        .try_fold((HashMap::new(), HashMap::new()), folder)?;
 
     Ok(l
         .iter()
@@ -27,11 +27,9 @@ fn calculate(input: &str) -> Result<String, SolutionErr> {
 
 type Acc = (HashMap<u32, u32>, HashMap<u32, u32>);
 
-fn process_line((mut l, mut r): Acc, line: &str) -> Result<Acc, SolutionErr> {
-     let (left_str, right_str) = line
-            .split_once("   ")
-            .ok_or_else(|| SolutionErr::new("Malformed data: line was not in the correct shape"))?;
-    *l.entry(left_str.parse()?).or_insert(0) += 1;
-    *r.entry(right_str.parse()?).or_insert(0) += 1;
+fn folder((mut l, mut r): Acc, line: &str) -> Result<Acc, SolutionErr> {
+     let (left, right) = parse_line(line)?;
+    *l.entry(left).or_insert(0) += 1;
+    *r.entry(right).or_insert(0) += 1;
     Ok((l, r))
 }

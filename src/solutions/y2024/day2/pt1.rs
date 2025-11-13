@@ -1,5 +1,5 @@
 
-use crate::{solutions::y2024::day2::shared::{attempt, get_nums}, utils::solution::{Solution, SolutionErr}};
+use crate::{solutions::y2024::day2::shared::{is_line_valid, get_nums}, utils::solution::{Solution, SolutionErr}};
 
 
 pub fn sol() -> Solution {
@@ -20,5 +20,5 @@ fn calculate(input: &str) -> Result<String, SolutionErr> {
 
 fn process_line(acc: u32, line: &str) -> Result<u32, SolutionErr> {
     let nums = get_nums(line)?;
-    Ok(if attempt(&nums, None) {acc + 1} else {acc})
+    Ok(if is_line_valid(&nums, None) {acc + 1} else {acc})
 }
